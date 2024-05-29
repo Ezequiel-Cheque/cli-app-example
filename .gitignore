@@ -1,0 +1,5 @@
+
+__pycache__/
+venv/
+cli.egg-info/
+yourscript.egg-info/

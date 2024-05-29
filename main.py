@@ -4,20 +4,19 @@ import click
 def cli():
     pass
 
-@cli.command()
-def initdb():
-    click.echo("Initialized the DataBase")
-    
-@cli.command()
-def dropdb():
-    click.echo("Dropped the database")
+def createService():
+    click.echo("Service created")
+
+def createController():
+    click.echo("Controller created")
 
 @cli.command()
-@click.option('--count', default=5, help='Number of greetings')
-@click.argument('name')
-def hello(count, name):
-    for x in range(count):
-        click.echo(f"Hello {name}")
+@click.option('-co', '--controller', "controller", default=None, help="Create a controller")
+@click.option('-s', '--service', "service", default=None, help="Create a service")
+def generate(controller, service):
+    click.echo(controller)
+    click.echo(service)
+
 
 if __name__ == '__main__':
     cli()
