@@ -54,7 +54,7 @@ class {dto.lower()}TransactionInput:
         return non_empty_fields
 
     def form():
-        schema_dict = json.loads(clipTransactionSchema.schema_json())["properties"]
+        schema_dict = json.loads({dto.lower()}TransactionSchema.schema_json())["properties"]
 
         for item in schema_dict.keys():
             schema_dict[item]["hiden"] = False
