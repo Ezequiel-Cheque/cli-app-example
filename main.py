@@ -113,8 +113,8 @@ class {dto.lower()}ConfigurationInput(BaseModel):
     click.echo("DTO created")
 
 def createService(service: str):
-    DIRNAME = f"src/psp/service/{service}/"
-    FILENAME = f"src/psp/service/{service}/{service}_service.py"
+    DIRNAME = f"src/psp/services/{service}/"
+    FILENAME = f"src/psp/services/{service}/{service}_service.py"
 
     directoryPath = Path(DIRNAME)
     filePath = Path(FILENAME)
@@ -138,7 +138,7 @@ from ...util.request import Request
 from ...util.enviroments import Enviroments
 from ...util.validate_propeties import validate
 
-class {service[0].upper()}{service[1:]}
+class {service[0].upper()}{service[1:]}:
     def __init__(self, _: Request):
         self.context = _
         self.requests = Request(self.context)
