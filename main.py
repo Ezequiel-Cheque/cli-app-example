@@ -53,45 +53,45 @@ class {dto.lower()}TransactionInput:
         non_empty_fields = {{field: value for field, value in createTransaction.dict().items() if value is not None}}
         return non_empty_fields
 
-        def form():
-            schema_dict = json.loads(clipTransactionSchema.schema_json())["properties"]
+    def form():
+        schema_dict = json.loads(clipTransactionSchema.schema_json())["properties"]
 
-            for item in schema_dict.keys():
+        for item in schema_dict.keys():
+            schema_dict[item]["hiden"] = False
+            schema_dict[item]["required"] = True
+
+            if str(item) == "external_transaction_id":
+                schema_dict[item]["hiden"] = True
+                schema_dict[item]["required"] = False
+
+            if str(item) == "email":
+                schema_dict[item]["hiden"] = True
+                schema_dict[item]["required"] = False
+
+            if str(item) == "currency":
+                schema_dict[item]["format"] = "super_select"
+                schema_dict[item]["to"] = "country"
+                schema_dict[item]["enum"] = enum_currency
                 schema_dict[item]["hiden"] = False
                 schema_dict[item]["required"] = True
+                
+            if str(item) == "firstname":
+                schema_dict[item]["minLength"] = 3
+                schema_dict[item]["maxLength"] = 20
+                
+            if str(item) == "lastname":
+                schema_dict[item]["minLength"] = 3
+                schema_dict[item]["maxLength"] = 20
 
-                if str(item) == "external_transaction_id":
-                    schema_dict[item]["hiden"] = True
-                    schema_dict[item]["required"] = False
+            if str(item) == "code":
+                schema_dict[item]["hiden"] = True
+                schema_dict[item]["required"] = False
+    
+            if str(item) == "phone":
+                schema_dict[item]["hiden"] = True
+                schema_dict[item]["required"] = False
 
-                if str(item) == "email":
-                    schema_dict[item]["hiden"] = True
-                    schema_dict[item]["required"] = False
-
-                if str(item) == "currency":
-                    schema_dict[item]["format"] = "super_select"
-                    schema_dict[item]["to"] = "country"
-                    schema_dict[item]["enum"] = enum_currency
-                    schema_dict[item]["hiden"] = False
-                    schema_dict[item]["required"] = True
-                    
-                if str(item) == "firstname":
-                    schema_dict[item]["minLength"] = 3
-                    schema_dict[item]["maxLength"] = 20
-                    
-                if str(item) == "lastname":
-                    schema_dict[item]["minLength"] = 3
-                    schema_dict[item]["maxLength"] = 20
-
-                if str(item) == "code":
-                    schema_dict[item]["hiden"] = True
-                    schema_dict[item]["required"] = False
-        
-                if str(item) == "phone":
-                    schema_dict[item]["hiden"] = True
-                    schema_dict[item]["required"] = False
-
-            return schema_dict
+        return schema_dict
 
 class {dto.lower()}ConfigurationSchema(BaseModel):
     baseapi: str = Field(description="")
