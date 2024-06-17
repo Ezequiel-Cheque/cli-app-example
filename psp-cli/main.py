@@ -1,10 +1,5 @@
 import click
-
 from modules import createController, createDTO, createService
-
-@click.group()
-def cli():
-    pass
 
 
 def createModule(name: str, path: str):
@@ -12,6 +7,9 @@ def createModule(name: str, path: str):
     createService(name=name, path=path)
     createDTO(name=name, path=path)
 
+@click.group()
+def cli():
+    pass
 
 @cli.command()
 @click.option('-mo', '--module', "module", default=None, help="Create a complete module")
@@ -21,7 +19,6 @@ def generate(module, path):
         createModule(name=module, path=path)
     else:
         click.echo(f"Error, put a name and a path correctly")
-
 
 if __name__ == '__main__':
     cli()
