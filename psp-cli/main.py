@@ -1,6 +1,6 @@
 import click
 
-from modules import createDTO, createController, createService
+from modules import createController, createDTO, createService
 
 @click.group()
 def cli():

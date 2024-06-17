@@ -1,16 +1,18 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name="cli",
-    version="0.1.0",
+    version="1.0.0",
+    description="Psp command line",
+    author="Ezequiel-Cheque",
+    package_dir={"": "psp-cli"},
     py_modules=["main"],
-    install_requires=[
-        "Click"
-    ],
+    packages=find_packages(where='psp-cli'),
+    include_package_data=True,
+    install_requires=["Click"],
     entry_points={
         "console_scripts": [
             'cli = main:cli',
         ],
     },
-    
 )
