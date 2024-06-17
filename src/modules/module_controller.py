@@ -6,6 +6,8 @@ def createController(name: str, path: str):
     
     DIRNAME = f"{path}/src/psp/controller/{name}/"
     FILENAME = f"{path}/src/psp/controller/{name}/{name}_controller.py"
+    INITFILE = f"{path}/src/psp/controller/__init__.py"
+
 
     dtoSchema = f"{name.lower()}TransactionSchema"
     dtoInput = f"{name.lower()}TransactionInput"
@@ -13,9 +15,11 @@ def createController(name: str, path: str):
     
     directoryPath = Path(DIRNAME)
     filePath = Path(FILENAME)
+    initFile = Path(INITFILE)
     
     directory = directoryPath.resolve()
     file = filePath.resolve()
+    init = initFile.resolve()
 
     if not directory.exists():
         directoryPath.mkdir()
@@ -66,3 +70,10 @@ async def form(_: Request, body: dict):
         f.write(controllerCode)
         f.close()
         click.echo("Controller created")
+        
+        ## add controller to init file
+        initCode = f"from .{name}_controller.py import *" 
+        fInit = open(init, "a")
+        fInit.write(f"\n{initCode}")
+        fInit.close()
+        click.echo("Add controller to init controller")

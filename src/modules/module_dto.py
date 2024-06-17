@@ -4,10 +4,13 @@ from pathlib import Path
 
 def createDTO(name, path: str):
     FILENAME = f"{path}/src/psp/dto/input/create_transaction_{name}_dto.py"
+    INITFILE = f"{path}/src/psp/dto/__init__.py"
 
     filePath = Path(FILENAME)
+    fileInit = Path(INITFILE)
     
     file = filePath.resolve()
+    init = fileInit.resolve()
 
     if file.exists():
         click.echo("dto existed")
@@ -108,3 +111,24 @@ class {name.lower()}ConfigurationInput(BaseModel):
     f.write(dtoCode)
     f.close()
     click.echo("DTO created")
+    
+    
+    # add dto to init file
+    initCode = f"from .input.create_transaction_{name}_dto import *\n"
+    
+    initData = open(init, "r")
+    initDataArray = initData.read().split("\n")
+    initData.close()
+    
+    index = initDataArray.index("# output")
+    initDataArray.insert(index - 1, initCode)
+    
+    newinitData = ""
+    for line in initDataArray:
+        newinitData += line+"\n"
+        
+    newInit = open(init, "w")
+    newInit.write(newinitData)
+    newInit.close()
+    
+    click.echo("Add dto to init file")
