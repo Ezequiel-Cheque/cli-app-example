@@ -34,7 +34,7 @@ from fastapi.security import HTTPBearer
 
 from ...decoration import logs
 from ...dto import {dtoSchema}, {dtoInput}
-from ...service.{name}.{name}_service import {service}
+from ...services.{name}.{name}_service import {service}
 
 {name} = APIRouter(prefix="/{name}", tags=["{name} psp integration"])
 security = HTTPBearer()
@@ -72,7 +72,7 @@ async def form(_: Request, body: dict):
         click.echo("Controller created")
         
         ## add controller to init file
-        initCode = f"from .{name}_controller.py import *" 
+        initCode = f"from .{name}.{name}_controller import *" 
         fInit = open(init, "a")
         fInit.write(f"\n{initCode}")
         fInit.close()
