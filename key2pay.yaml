@@ -1,0 +1,36 @@
+
+---
+psp:
+  name: "key2pay"
+  environment:
+    url: str
+    apikey: str
+    url_notification: str
+  
+  services:
+    
+    - type: "CREATE_TRANSACTION"
+      dto:
+        amount: int
+        currency: str
+        country: str
+        ip: str
+        external_transaction_id: str
+        code: str
+      payload:
+        currency: currency
+        country: country
+        ip_client: ip
+        order_id: external_transaction_id
+        payment_type: code
+        notification: url_notification
+    
+    - type: "GET_STATUS"
+      path_parameter:
+        -provider_id
+    
+    - type: "WEBHOOK"
+      dto:
+        order_id: str
+        status: str
+

@@ -1,24 +1,36 @@
 import click
+from yaml import load, dump
+
+try:
+    from yaml import CLoader as Loader, CDumper as Dumper
+except ImportError:
+    from yaml import Loader, Dumper
+    
+
 from modules import createController, createDTO, createService
 
 
-def createModule(name: str, path: str):
-    createController(name=name, path=path)
-    createService(name=name, path=path)
-    createDTO(name=name, path=path)
+def integration(filename: str):
+    # click.echo(filename)
+    doc={}
+    with open(filename) as fichero:
+        doc=load(fichero, Loader=Loader)
+    
+    click.echo(doc)
+    
+    # createController(name=name, path=path)
+    # createService(name=name, path=path)
+    # createDTO(name=name, path=path)
 
 @click.group()
 def cli():
     pass
 
 @cli.command()
-@click.option('-mo', '--module', "module", default=None, help="Create a complete module")
-@click.argument('path')
-def generate(module, path):
-    if module:
-        createModule(name=module, path=path)
-    else:
-        click.echo(f"Error, put a name and a path correctly")
+@click.argument('integration_file', type=click.Path(exists=True))
+def integrate(integration_file):
+    # path = "."
+    integration(filename=integration_file)
 
 if __name__ == '__main__':
     cli()
