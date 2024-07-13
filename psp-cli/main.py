@@ -11,16 +11,28 @@ from modules import createController, createDTO, createService
 
 
 def integration(filename: str):
-    # click.echo(filename)
-    doc={}
-    with open(filename) as fichero:
-        doc=load(fichero, Loader=Loader)
+    try:
+        doc={}
+        with open(filename) as fichero:
+            doc=load(fichero, Loader=Loader)
+        
+        click.echo(doc)
+    except Exception as err:
+        click.echo(f"Error, invalid yaml: {str(err)}");
+
+    ## Crear Dto del psp
+    ## agregar dto al init
+    ## Crear service
+    ## crear controller y agregar al init
+    ## agregar schema de environment al dto
+    ## Recorrer array de servicios
+    ## Si hay dto crear el schema del dto
+    ## crear funcion en el service class y verificar tipo de servicio
     
-    click.echo(doc)
-    
+
     # createController(name=name, path=path)
-    # createService(name=name, path=path)
     # createDTO(name=name, path=path)
+    # createService(name=name, path=path)
 
 @click.group()
 def cli():
